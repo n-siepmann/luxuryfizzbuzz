@@ -28,10 +28,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                         <form action="#" 
                               th:action="@{/addpredicate}" 
-                              th:object="${fizzbundle}"
+                              th:object="${predicatedto}"
                               th:method="post">
                             <label class="visually-hidden" for="rule">Choose rule:</label>
-                            <select id="rule" th:field="*{newPredicate.name}">
+                            <select id="rule" th:field="*{name}">
                                 <option value="">-- Choose rule ---</option>
                                 <option value="Cube">Cube</option>
                                 <option value="Divisible by ">Divisible by...</option>
@@ -43,7 +43,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 <option value="Triangular">Triangular</option>
                             </select>
                             <label class="visually-hidden" for="divisor">Divisor</label>
-                            <input id="divisor" type="number" min="2" max="100" placeholder="Minimum of 2" th:field="*{newPredicate.divisor}"/>
+                            <input id="divisor" type="number" min="2" max="100" placeholder="Minimum of 2" th:field="*{divisor}"/>
                             <button type="submit" class="btn btn-primary">Add</button>
                         </form>
 
@@ -55,7 +55,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr th:each="predicate : ${fizzbundle.predicatelist}">
+                                <tr th:each="predicate : ${predicatelist}">
                                     <td th:text="${syllables[predicateStat.index]}"></td>
                                     <td><span th:text="${predicate.name}"></span><span th:if="${predicate.name == 'Divisible by '}" th:text="${predicate.divisor}"></span></td>
                                 </tr>
@@ -64,7 +64,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                         <table class="table table-hover">
                             <tbody>
-                                <tr th:each="result : ${fizzbundle.results}">
+                                <tr th:each="result : ${results}">
                                     <td th:text="${result}">
                                     </td>
                                 </tr>

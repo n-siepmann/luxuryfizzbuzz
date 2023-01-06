@@ -4,6 +4,7 @@
  */
 package com.nicksiepmann.luxuryfizzbuzz;
 
+import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,37 +27,40 @@ public class FizzbuzzController {
 
     @GetMapping("/")
     public String getIndex(Model model, HttpSession session) {
-        FizzBundle bundle = new FizzBundle();
+        ArrayList<PredicateDTO> predicatelist = new ArrayList<>();
         model.addAttribute("syllables", this.service.getSyllables());
-        model.addAttribute("fizzbundle", bundle);
-        session.setAttribute("fizzbundle", bundle);
+        model.addAttribute("predicatelist", predicatelist);
+        model.addAttribute("predicatedto", new PredicateDTO());
+        session.setAttribute("predicatelist", predicatelist);
         return "index";
     }
 
     @PostMapping("/addpredicate")
-    public String addPredicate(@ModelAttribute("fizzbundle") FizzBundle fizzbundle, Model model, HttpSession session) {
-        FizzBundle saved = (FizzBundle) session.getAttribute("fizzbundle");
-        if (saved == null) {
-            saved = new FizzBundle();
+    public String addPredicate(@ModelAttribute("predicatedto") PredicateDTO predicatedto, Model model, HttpSession session) {
+        ArrayList<PredicateDTO> predicatelist = (ArrayList<PredicateDTO>) session.getAttribute("predicatelist");
+        if (predicatelist == null) {
+            predicatelist = new ArrayList<>();
         }
-        saved.getPredicatelist().add(fizzbundle.getNewPredicate());
-        saved.setNewPredicate(new PredicateDTO());
+        predicatelist.add(predicatedto);
 
-        model.addAttribute("fizzbundle", saved);
-        session.setAttribute("fizzbundle", saved);
         model.addAttribute("syllables", this.service.getSyllables());
+        model.addAttribute("predicatelist", predicatelist);
+        model.addAttribute("predicatedto", new PredicateDTO());
+        session.setAttribute("predicatelist", predicatelist);
         return "index";
     }
 
     @PostMapping("/submit")
     public String submitPredicates(Model model, HttpSession session) {
-        FizzBundle fizzbundle = (FizzBundle) session.getAttribute("fizzbundle");
-        fizzbundle.setResults(this.service.process(this.service.parse(fizzbundle.getPredicatelist())));
-        fizzbundle.setNewPredicate(new PredicateDTO());
-
+        ArrayList<PredicateDTO> predicatelist = (ArrayList<PredicateDTO>) session.getAttribute("predicatelist");
+        if (predicatelist == null) {
+            return "redirect:/";
+        }
         model.addAttribute("syllables", this.service.getSyllables());
-        session.setAttribute("fizzbundle", fizzbundle);
-        model.addAttribute("fizzbundle", fizzbundle);
+        model.addAttribute("predicatelist", predicatelist);
+        model.addAttribute("predicatedto", new PredicateDTO());
+        session.setAttribute("predicatelist", predicatelist);
+        model.addAttribute("results", this.service.process(this.service.parse(predicatelist)));
         return "index";
     }
 
