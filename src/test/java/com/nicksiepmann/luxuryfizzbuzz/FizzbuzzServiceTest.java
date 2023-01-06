@@ -181,4 +181,12 @@ public class FizzbuzzServiceTest {
         assertEquals("Fizzbazfred", processed[27]);
     }
 
+    @Test
+    void canGetFormattedSyllables() {
+        String[] prettySyllables = this.underTest.getSyllables();
+        assertEquals("Fizz", prettySyllables[0]);
+        assertEquals("Shme", prettySyllables[10]);
+
+    }
+
 }

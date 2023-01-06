@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Luxury Fizzbuzz</title>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href="bootstrap.min.css" rel="stylesheet">
+                <link href="styles.css" rel="stylesheet">
+                <!--<link rel="preconnect" href="https://fonts.googleapis.com">
+                <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=Ubuntu+Mono&display=swap" rel="stylesheet">        
+                <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+                <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+                <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">-->
+                </head>
+                <body>
+                    <!--<header>
+                        <container class="bannercontainer">
+                            <span class="bannerLogoBox">Luxury Fizzbuzz</span>
+                        </container>                    
+                    </header>-->
+                    <main>
+                        <h1>Luxury Fizzbuzz</h1>
+
+                        <form action="#" 
+                              th:action="@{/addpredicate}" 
+                              th:object="${fizzbundle}"
+                              th:method="post">
+                            <label class="visually-hidden" for="rule">Choose rule:</label>
+                            <select id="rule" th:field="*{newPredicate.name}">
+                                <option value="">-- Choose rule ---</option>
+                                <option value="Cube">Cube</option>
+                                <option value="Divisible by ">Divisible by...</option>
+                                <option value="Evil">Evil</option>
+                                <option value="Mersenne">Mersenne</option>
+                                <option value="Power of two">Power of two</option>
+                                <option value="Sum of two cube">Sum of two cubes</option>
+                                <option value="Square">Square</option>
+                                <option value="Triangular">Triangular</option>
+                            </select>
+                            <label class="visually-hidden" for="divisor">Divisor</label>
+                            <input id="divisor" type="number" min="2" max="100" placeholder="Minimum of 2" th:field="*{newPredicate.divisor}"/>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </form>
+
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <td>Word</td>
+                                    <td>Rule</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="predicate : ${fizzbundle.predicatelist}">
+                                    <td th:text="${syllables[predicateStat.index]}"></td>
+                                    <td><span th:text="${predicate.name}"></span><span th:if="${predicate.name == 'Divisible by '}" th:text="${predicate.divisor}"></span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-hover">
+                            <tbody>
+                                <tr th:each="result : ${fizzbundle.results}">
+                                    <td th:text="${result}">
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <form action="#" 
+                              th:action="@{/submit}" 
+                              th:method="post">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                        <form action="#" 
+                              th:action="@{/}" 
+                              th:method="get">
+                            <button type="submit" class="btn btn-primary">Reset</button>
+                        </form>
+                    </main>
+                    <footer>
+                        <p>Nick Siepmann | 2022</p>
+                    </footer>
+                </body>
+                </html>
