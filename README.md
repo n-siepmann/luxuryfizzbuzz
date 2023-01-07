@@ -11,7 +11,7 @@ A customisable take on a classic coding exercise - enter up to 10 of the followi
 - Mersenne prime
 - Evil (ie the number contains an even number of 1s when rendered in binary)
 
-Try it at LINK
+Try it at https://luxuryfizzbuzz.nw.r.appspot.com/
 
 ## Stack
 Spring Boot, Thymeleaf, Java 8 Predicates
