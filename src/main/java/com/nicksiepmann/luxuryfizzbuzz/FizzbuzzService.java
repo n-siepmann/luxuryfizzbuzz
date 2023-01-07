@@ -26,8 +26,8 @@ public class FizzbuzzService {
 
     String[] process(List<Predicate> predicateList) {
         String[] numberList = new String[100];
-        for (int i = 1; i < 100; i++) {
-            numberList[i] = interpret(i, predicateList);
+        for (int i = 0; i < 100; i++) {
+            numberList[i] = interpret(i + 1, predicateList);
         }
         return numberList;
     }
@@ -80,10 +80,10 @@ public class FizzbuzzService {
                 yield null;
             }
             default -> {
-                throw new IllegalStateException("Unexpected value");
+                throw new IllegalStateException("Unexpected value: " + s);
             }
         }
-        ).filter(s -> s != null).toList();
+        ).toList();
     }
 
 }

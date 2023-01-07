@@ -32,7 +32,7 @@ public class FizzbuzzController {
         model.addAttribute("predicatelist", predicatelist);
         model.addAttribute("predicatedto", new PredicateDTO());
         session.setAttribute("predicatelist", predicatelist);
-        return "index";
+        return "fizzbuzz";
     }
 
     @PostMapping("/addpredicate")
@@ -41,13 +41,14 @@ public class FizzbuzzController {
         if (predicatelist == null) {
             predicatelist = new ArrayList<>();
         }
-        predicatelist.add(predicatedto);
+        if (!predicatedto.getName().isBlank()){
+        predicatelist.add(predicatedto);}
 
         model.addAttribute("syllables", this.service.getSyllables());
         model.addAttribute("predicatelist", predicatelist);
         model.addAttribute("predicatedto", new PredicateDTO());
         session.setAttribute("predicatelist", predicatelist);
-        return "index";
+        return "fizzbuzz";
     }
 
     @PostMapping("/submit")
@@ -61,7 +62,7 @@ public class FizzbuzzController {
         model.addAttribute("predicatedto", new PredicateDTO());
         session.setAttribute("predicatelist", predicatelist);
         model.addAttribute("results", this.service.process(this.service.parse(predicatelist)));
-        return "index";
+        return "fizzbuzz";
     }
 
 }

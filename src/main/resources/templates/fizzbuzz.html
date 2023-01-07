@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html lang="en-US" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Luxury Fizzbuzz</title>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href="bootstrap.min.css" rel="stylesheet">
+                    <link href="styles.css" rel="stylesheet">
+                        <link rel="preconnect" href="https://fonts.googleapis.com">
+                            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+                                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400&family=Ubuntu+Mono&display=swap" rel="stylesheet">        
+                                    </head>
+                                    <body onload="setDefaultDivisor()">
+                                        <header>
+                                            <h1>Luxury Fizzbuzz</h1>
+                                        </header>                    
+                                        <main>
+                                            <form action="#" 
+                                                  th:action="@{/addpredicate}" 
+                                                  th:object="${predicatedto}"
+                                                  th:method="post">
+                                                <p>
+                                                    <label class="visually-hidden" for="rule">Choose rule:</label>
+                                                    <select onchange="toggleDivisorVisibility()" id="rule" th:field="*{name}" th:disabled="${predicatelist.size > 9}">
+                                                        <option value="">-- Choose rule ---</option>
+                                                        <option value="Cube">Cube</option>
+                                                        <option value="Divisible by ">Divisible by...</option>
+                                                        <option value="Evil">Evil</option>
+                                                        <option value="Mersenne">Mersenne</option>
+                                                        <option value="Power of two">Power of two</option>
+                                                        <option value="Prime">Prime</option>
+                                                        <option value="Sum of two cubes">Sum of two cubes</option>
+                                                        <option value="Square">Square</option>
+                                                        <option value="Triangular">Triangular</option>
+                                                    </select>
+                                                    <label class="visually-hidden" for="divisor">Divisor</label>
+                                                    <input class="visually-hidden" id="divisor" type="number" min="2" max="100" value="2" th:field="*{divisor}"/>
+                                                </p>
+                                                <p><button type="submit" class="btn btn-secondary" th:classappend="${predicatelist.size > 9 ? 'disabled' : ''}" th:disabled="${predicatelist.size > 9}">Add</button></p>
+                                            </form>
+
+                                            <table th:if="${not #lists.isEmpty(predicatelist)}" class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Word</th>
+                                                        <th scope="col">Rule</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="predicate : ${predicatelist}">
+                                                        <td th:text="${syllables[predicateStat.index]}"></td>
+                                                        <td><span th:text="${predicate.name}"></span><span th:if="${predicate.name == 'Divisible by '}" th:text="${predicate.divisor}"></span></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <div class="results"><p th:each="result : ${results}"><span th:text="${result}"></span></p></div>
+
+                                            <table><tr><td>
+                                                        <form action="#" 
+                                                              th:action="@{/submit}" 
+                                                              th:method="post">
+                                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                                        </form></td><td>
+                                                        <form action="#" 
+                                                              th:action="@{/}" 
+                                                              th:method="get">
+                                                            <button type="submit" class="btn btn-warning">Reset</button>
+                                                        </form></td></tr></table>
+                                        </main>
+                                        <footer>
+                                            <p>Nick Siepmann | 2023</p>
+                                        </footer>
+
+                                        <script>
+                                            function setDefaultDivisor() {
+                                                document.getElementById("divisor").defaultValue = "2";
+                                            }
+                                            function toggleDivisorVisibility() {
+                                                var rule = document.getElementById("rule");
+                                                var divisor = document.getElementById("divisor");
+                                                if (rule.value == "Divisible by ") {
+                                                    divisor.classList.remove("visually-hidden");
+                                                } else {
+                                                    divisor.classList.add("visually-hidden");
+                                                }
+                                            }
+                                        </script>
+
+                                    </body>
+                                    </html>
